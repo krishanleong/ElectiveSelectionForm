@@ -63,7 +63,13 @@ h3 {
   border: 1px red solid;
 }
 .class {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 50px;
   padding: 4px;
+  border: black 1px solid;
 }
 .science {
   background-color: lightgreen;

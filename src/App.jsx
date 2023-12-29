@@ -8,19 +8,28 @@ function App() {
   const [grade, setGrade] = useState("5th");
   const [math7th, setMath7th] = useState("");
 
-  const [checkedState, setCheckedState] = useState(
-    new Array(electiveData.length).fill(false)
-  );
+  const [electives, setElectives] = useState(electiveData);
 
   const maxElectives = math7th === "7thalgebra" ? 1.5 : 1;
 
-  console.log(maxElectives);
-  const handleOnChange = (position) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
+  console.log("Max electives", maxElectives);
 
-    setCheckedState(updatedCheckedState);
+  const currElectives = electives.reduce(
+    (accumulator, elective) =>
+      accumulator + (elective.check && elective.length),
+    0
+  );
+  console.log("curr electives", currElectives);
+
+  const handleOnChange = (position) => {
+    const updatedElectives = electives.map((elective, index) => {
+      if (index === position) {
+        return { ...elective, check: !elective.check };
+      }
+      return elective;
+    });
+
+    setElectives(updatedElectives);
   };
 
   return (
@@ -113,8 +122,9 @@ function App() {
               </div>
               <div className="Electives">
                 <h3>Select your Electives</h3>
+                <button>Lock in</button>
                 <div className="electiveContainer">
-                  {electiveData.map((elective, index) => {
+                  {electives.map((elective, index) => {
                     return (
                       <div className="electivechoice">
                         <input
@@ -122,8 +132,12 @@ function App() {
                           id={elective.name}
                           name={elective.name}
                           key={elective.name}
-                          checked={checkedState[index]}
+                          checked={elective.check}
                           onChange={() => handleOnChange(index)}
+                          disabled={
+                            currElectives + elective.length > maxElectives &&
+                            elective.check === false
+                          }
                         />
                         <label
                           htmlFor={elective.name}
@@ -133,7 +147,8 @@ function App() {
                               : "checklabel full"
                           }
                         >
-                          {elective.name} - {elective.length} year
+                          {elective.name} -{" "}
+                          {elective.length === 0.5 ? "semester" : "full year"}
                         </label>
                       </div>
                     );
@@ -149,14 +164,14 @@ function App() {
                   <div className="class">4th block</div>
                 </div>
                 <div className="column">
-                  A Day First Sem
+                  A Day First Semester
                   <div className="english class">Language Arts</div>
                   <div className="full class">Health/PE</div>
                   <div className="math class">{math7th}</div>
                   <div className="science class">Science</div>
                 </div>
                 <div className="column">
-                  B Day First Sem
+                  B Day First Semester
                   <div className="english class">Language Arts</div>
                   <div className="class">elective block</div>
                   {math7th === "7thmath" ? (
@@ -167,14 +182,14 @@ function App() {
                   <div className="history class">History</div>
                 </div>
                 <div className="column">
-                  A Day Second Sem
+                  A Day Second Semester
                   <div className="english class">Language Arts</div>
                   <div className="full class">Health/PE</div>
                   <div className="math class">{math7th}</div>
                   <div className="science class">Science</div>
                 </div>
                 <div className="column">
-                  B Day Second Sem
+                  B Day Second Semester
                   <div className="english class">Language Arts</div>
                   <div className="class">elective block</div>
                   {math7th === "7thmath" ? (

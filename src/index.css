@@ -71,10 +71,20 @@ h3 {
   padding: 4px;
   border: black 1px solid;
 }
+
+.halfclass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 25px;
+  padding: 4px;
+  border: black 1px solid;
+}
 .science {
   background-color: lightgreen;
 }
-.history {
+.core {
   background-color: lightblue;
 }
 .english {
@@ -85,6 +95,7 @@ h3 {
 }
 .half {
   background-color: #a3ff16;
+  height: 25px;
 }
 
 .half:hover {

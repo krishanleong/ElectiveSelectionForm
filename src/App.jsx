@@ -19,10 +19,18 @@ function App() {
       accumulator + (elective.check && elective.length),
     0
   );
+
   console.log("curr electives", currElectives);
 
   const electiveChoices = electives.filter(
     (elective) => elective.check === true
+  );
+  const semElectiveChoices = electives.filter(
+    (elective) => elective.check === true && elective.length === 0.5
+  );
+
+  const yearElectiveChoices = electives.filter(
+    (elective) => elective.check === true && elective.length === 1
   );
 
   console.log("electives", electiveChoices);
@@ -169,60 +177,84 @@ function App() {
                   <div className="class">4th block</div>
                 </div>
                 <div className="column">
-                  A Day First Semester
-                  <div className="english class">Language Arts</div>
+                  A Day
+                  <div className="core class">Language Arts</div>
                   <div className="full class">Health/PE</div>
-                  <div className="math class">{math7th}</div>
-                  <div className="science class">Science</div>
+                  <div className="core class">{math7th}</div>
+                  <div className="core class">Science</div>
                 </div>
                 <div className="column">
-                  B Day First Semester
-                  <div className="english class">Language Arts</div>
-                  {electiveChoices.length >= 1 ? (
-                    <div
-                      className={`class ${
-                        electiveChoices[0].length === 0.5 ? "half" : "full"
-                      }`}
-                    >
-                      {electiveChoices[0].name}
-                    </div>
-                  ) : (
-                    <div className="class"> elective block</div>
-                  )}
-                  {math7th === "7thmath" ? (
-                    <div className="math class">{math7th}</div>
-                  ) : (
+                  B Day
+                  <div className="core class">Language Arts</div>
+                  {/* Elective block start ***************************** */}
+                  {electiveChoices.length === 0 && (
                     <div className="class">elective block</div>
                   )}
-                  <div className="history class">History</div>
-                </div>
-                <div className="column">
-                  A Day Second Semester
-                  <div className="english class">Language Arts</div>
-                  <div className="full class">Health/PE</div>
-                  <div className="math class">{math7th}</div>
-                  <div className="science class">Science</div>
-                </div>
-                <div className="column">
-                  B Day Second Semester
-                  <div className="english class">Language Arts</div>
-                  {electiveChoices.length > 1 ? (
-                    <div
-                      className={`class ${
-                        electiveChoices[1].length === 0.5 ? "half" : "full"
-                      }`}
-                    >
-                      {electiveChoices[1].name}
-                    </div>
-                  ) : (
-                    <div className="class"> elective block</div>
+                  {semElectiveChoices.length === 1 && (
+                    <>
+                      <div className="class half">
+                        {electiveChoices[0].name}
+                      </div>
+                      <div className="halfclass">elective block</div>
+                    </>
                   )}
+                  {semElectiveChoices.length >= 2 && (
+                    <>
+                      <div className="class half">
+                        {electiveChoices[0].name}
+                      </div>
+                      <div className="class half">
+                        {electiveChoices[1].name}
+                      </div>
+                    </>
+                  )}
+                  {yearElectiveChoices.length >= 1 &&
+                    semElectiveChoices.length === 0 && (
+                      <div className="class full">
+                        {electiveChoices[0].name}
+                      </div>
+                    )}
                   {math7th === "7thmath" ? (
-                    <div className="math class">{math7th}</div>
+                    <div className="core class">{math7th}</div>
                   ) : (
-                    <div className="class">elective block</div>
+                    <>
+                      {semElectiveChoices.length +
+                        yearElectiveChoices.length * 2 <
+                        3 && <div className="class">elective block</div>}
+                      {semElectiveChoices.length === 3 && (
+                        <>
+                          <div className="class half">
+                            {electiveChoices[2].name}
+                          </div>
+                          <div className="halfclass">elective block</div>
+                        </>
+                      )}
+                      {semElectiveChoices.length === 4 && (
+                        <>
+                          <div className="class half">
+                            {electiveChoices[2].name}
+                          </div>
+                          <div className="class half">
+                            {electiveChoices[3].name}
+                          </div>
+                        </>
+                      )}
+                      {yearElectiveChoices.length === 1 &&
+                        semElectiveChoices.length <= 2 &&
+                        semElectiveChoices.length !== 0 && (
+                          <div className="class full">
+                            {yearElectiveChoices[0].name}
+                          </div>
+                        )}
+
+                      {yearElectiveChoices.length === 2 && (
+                        <div className="class full">
+                          {yearElectiveChoices[1].name}
+                        </div>
+                      )}
+                    </>
                   )}
-                  <div className="history class">History</div>
+                  <div className="core class">History</div>
                 </div>
               </div>
             </>

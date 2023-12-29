@@ -10,7 +10,7 @@ function App() {
 
   const [electives, setElectives] = useState(electiveData);
 
-  const maxElectives = math7th === "7thalgebra" ? 1.5 : 1;
+  const maxElectives = math7th === "7thalgebra" ? 2 : 1;
 
   console.log("Max electives", maxElectives);
 
@@ -21,6 +21,11 @@ function App() {
   );
   console.log("curr electives", currElectives);
 
+  const electiveChoices = electives.filter(
+    (elective) => elective.check === true
+  );
+
+  console.log("electives", electiveChoices);
   const handleOnChange = (position) => {
     const updatedElectives = electives.map((elective, index) => {
       if (index === position) {
@@ -173,7 +178,17 @@ function App() {
                 <div className="column">
                   B Day First Semester
                   <div className="english class">Language Arts</div>
-                  <div className="class">elective block</div>
+                  {electiveChoices.length >= 1 ? (
+                    <div
+                      className={`class ${
+                        electiveChoices[0].length === 0.5 ? "half" : "full"
+                      }`}
+                    >
+                      {electiveChoices[0].name}
+                    </div>
+                  ) : (
+                    <div className="class"> elective block</div>
+                  )}
                   {math7th === "7thmath" ? (
                     <div className="math class">{math7th}</div>
                   ) : (
@@ -191,7 +206,17 @@ function App() {
                 <div className="column">
                   B Day Second Semester
                   <div className="english class">Language Arts</div>
-                  <div className="class">elective block</div>
+                  {electiveChoices.length > 1 ? (
+                    <div
+                      className={`class ${
+                        electiveChoices[1].length === 0.5 ? "half" : "full"
+                      }`}
+                    >
+                      {electiveChoices[1].name}
+                    </div>
+                  ) : (
+                    <div className="class"> elective block</div>
+                  )}
                   {math7th === "7thmath" ? (
                     <div className="math class">{math7th}</div>
                   ) : (

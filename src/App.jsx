@@ -1,35 +1,202 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { electiveData } from "./utils/electives";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [grade, setGrade] = useState("5th");
+  const [math7th, setMath7th] = useState("");
+
+  const [checkedState, setCheckedState] = useState(
+    new Array(electiveData.length).fill(false)
+  );
+
+  const maxElectives = math7th === "7thalgebra" ? 1.5 : 1;
+
+  console.log(maxElectives);
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="container">
+      <form>
+        <div className="gradeSelection">
+          <h2>Select your current grade</h2>
+          <div className="mathcontainer">
+            <input
+              type="radio"
+              id="6th"
+              name="grade"
+              value="6th"
+              onChange={() => setGrade("6th")}
+            />
+            <label htmlFor="6th" className="radiolabel">
+              6th
+            </label>
+            <input
+              type="radio"
+              id="7th"
+              name="grade"
+              value="7th"
+              onChange={() => setGrade("7th")}
+            />
+            <label htmlFor="7th" className="radiolabel">
+              7th
+            </label>
+          </div>
+        </div>
+        <div className="coreClasses">
+          {grade === "6th" && (
+            <>
+              <div className="Math">
+                <h3>Select your math class</h3>
+                <input
+                  type="radio"
+                  id="7thmath"
+                  name="7thmath"
+                  checked={math7th === "7thmath"}
+                  onChange={() => setMath7th("7thmath")}
+                />
+                <label htmlFor="7thmath" className="radiolabel">
+                  7th Grade Math
+                </label>
+                <input
+                  type="radio"
+                  id="7thalgebra"
+                  name="7thalgebra"
+                  checked={math7th === "7thalgebra"}
+                  onChange={() => setMath7th("7thalgebra")}
+                />
+                <label htmlFor="7thalgebra" className="radiolabel">
+                  7th Grade Algebra
+                </label>
+              </div>
+
+              <div className="Core">
+                <h3>Required 7th grade classes</h3>
+                <input
+                  type="checkbox"
+                  id="7thla"
+                  name="7thla"
+                  disabled
+                  checked
+                />
+                <label htmlFor="7thla" className="checklabel">
+                  7th Grade Language Arts
+                </label>
+                <input
+                  type="checkbox"
+                  id="7thscience"
+                  name="7thscience"
+                  disabled
+                  checked
+                />
+                <label htmlFor="7thscience" className="checklabel">
+                  7th Grade Science
+                </label>
+                <input
+                  type="checkbox"
+                  id="7thhistory"
+                  name="7thhistory"
+                  disabled
+                  checked
+                />
+                <label htmlFor="7thhistory" className="checklabel">
+                  7th Grade History
+                </label>
+              </div>
+              <div className="Electives">
+                <h3>Select your Electives</h3>
+                <div className="electiveContainer">
+                  {electiveData.map((elective, index) => {
+                    return (
+                      <div className="electivechoice">
+                        <input
+                          type="checkbox"
+                          id={elective.name}
+                          name={elective.name}
+                          key={elective.name}
+                          checked={checkedState[index]}
+                          onChange={() => handleOnChange(index)}
+                        />
+                        <label
+                          htmlFor={elective.name}
+                          className={
+                            elective.length === 0.5
+                              ? "checklabel half"
+                              : "checklabel full"
+                          }
+                        >
+                          {elective.name} - {elective.length} year
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="Schedule">
+                <div className="column">
+                  Block
+                  <div className="class">1st block</div>
+                  <div className="class">2nd block</div>
+                  <div className="class">3rd block</div>
+                  <div className="class">4th block</div>
+                </div>
+                <div className="column">
+                  A Day First Sem
+                  <div className="english class">Language Arts</div>
+                  <div className="full class">Health/PE</div>
+                  <div className="math class">{math7th}</div>
+                  <div className="science class">Science</div>
+                </div>
+                <div className="column">
+                  B Day First Sem
+                  <div className="english class">Language Arts</div>
+                  <div className="class">elective block</div>
+                  {math7th === "7thmath" ? (
+                    <div className="math class">{math7th}</div>
+                  ) : (
+                    <div className="class">elective block</div>
+                  )}
+                  <div className="history class">History</div>
+                </div>
+                <div className="column">
+                  A Day Second Sem
+                  <div className="english class">Language Arts</div>
+                  <div className="full class">Health/PE</div>
+                  <div className="math class">{math7th}</div>
+                  <div className="science class">Science</div>
+                </div>
+                <div className="column">
+                  B Day Second Sem
+                  <div className="english class">Language Arts</div>
+                  <div className="class">elective block</div>
+                  {math7th === "7thmath" ? (
+                    <div className="math class">{math7th}</div>
+                  ) : (
+                    <div className="class">elective block</div>
+                  )}
+                  <div className="history class">History</div>
+                </div>
+              </div>
+            </>
+          )}
+          {grade === "7th" && (
+            <>
+              <p>to be determined</p>
+            </>
+          )}
+        </div>
+        <button>Submit</button>
+      </form>
+    </div>
+  );
 }
 
-export default App
+export default App;

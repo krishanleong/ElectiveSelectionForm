@@ -29,6 +29,7 @@ h2 {
 .checklabel {
   margin-right: 80px;
   margin-left: 10px;
+  font-size: 15px;
 }
 
 .Math,
@@ -38,7 +39,7 @@ h2 {
   margin-bottom: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .electiveContainer {
@@ -51,6 +52,7 @@ h2 {
 .electivechoice {
   width: 350px;
   margin: 4px;
+  font-size: 15px;
 }
 
 h3 {
@@ -60,7 +62,7 @@ h3 {
 .Schedule {
   display: flex;
   flex-direction: row;
-  border: 1px red solid;
+  /* border: 1px red solid; */
 }
 .class {
   display: flex;
@@ -113,7 +115,7 @@ h3 {
   transition: 0.6s;
 }
 .column {
-  width: 19%;
+  width: 23%;
 }
 button {
   background-color: lightpink;
@@ -130,4 +132,13 @@ button {
 button:hover {
   background-color: hsl(172, 67%, 45%);
   transition: 0.6s;
+}
+.colheader {
+  text-align: center;
+  margin: 2px;
+}
+
+.altclass {
+  font-size: smaller;
+  margin-left: 40px;
 }

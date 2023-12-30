@@ -22,16 +22,33 @@ function App() {
   console.log("curr electives", currElectives);
 
   const electiveChoices = electives.filter(
-    (elective) => elective.check === true
+    (elective) =>
+      elective.check === true &&
+      elective.firstAlt === false &&
+      elective.secondAlt === false
   );
   const semElectiveChoices = electives.filter(
-    (elective) => elective.check === true && elective.length === 0.5
+    (elective) =>
+      elective.check === true &&
+      elective.length === 0.5 &&
+      elective.chosen === true
   );
 
   const yearElectiveChoices = electives.filter(
-    (elective) => elective.check === true && elective.length === 1
+    (elective) =>
+      elective.check === true &&
+      elective.chosen === true &&
+      elective.length === 1
+  );
+  const firstAltElectiveChoices = electives.filter(
+    (elective) => elective.check === true && elective.firstAlt === true
+  );
+  const secondAltElectiveChoices = electives.filter(
+    (elective) => elective.check === true && elective.secondAlt === true
   );
 
+  console.log("step", step);
+  console.log("first alts", firstAltElectiveChoices);
   console.log("electives", electives);
   const handleOnChange = (position) => {
     const updatedElectives = electives.map((elective, index) => {
@@ -46,7 +63,7 @@ function App() {
 
   function handleReset(e) {
     e.preventDefault();
-    setGrade("");
+
     setMath7th("");
     setStep(1);
     setElectives(electiveData);
@@ -70,7 +87,7 @@ function App() {
     }
     if (step === 3) {
       const updatedElectives = electives.map((elective) =>
-        elective.check && !elective.chosen
+        elective.check && !elective.chosen && !elective.firstAlt
           ? { ...elective, secondAlt: true }
           : elective
       );
@@ -82,7 +99,10 @@ function App() {
 
   return (
     <div className="container">
-      <form>
+      <form
+        method="POST"
+        action="https://script.google.com/macros/s/AKfycbzdmrSZdJvEAujZAul8cPcbcwNgTEUzfjhcT-DIpfIO-Hyoa6SPJCgYTqItvo0WgmaZ3g/exec"
+      >
         <div className="gradeSelection">
           <h2>Select your current grade</h2>
           <div className="mathcontainer">
@@ -218,21 +238,21 @@ function App() {
               {math7th !== "" && (
                 <div className="Schedule">
                   <div className="column">
-                    Block
+                    <div className="colheader">Block</div>
                     <div className="class">1st block</div>
                     <div className="class">2nd block</div>
                     <div className="class">3rd block</div>
                     <div className="class">4th block</div>
                   </div>
                   <div className="column">
-                    A Day
+                    <div className="colheader">A Day</div>
                     <div className="core class">Language Arts</div>
                     <div className="full class">Health/PE</div>
                     <div className="core class">{math7th}</div>
                     <div className="core class">Science</div>
                   </div>
                   <div className="column">
-                    B Day
+                    <div className="colheader">B Day</div>
                     <div className="core class">Language Arts</div>
                     {/* Elective block start ***************************** */}
                     {electiveChoices.length === 0 && (
@@ -304,7 +324,23 @@ function App() {
                     )}
                     <div className="core class">History</div>
                   </div>
-                  <div className="column">Alternates</div>
+                  <div className="column">
+                    <div className="colheader">Alternates</div>
+                    {firstAltElectiveChoices.map((elective) => {
+                      return (
+                        <p key={elective.name} className="altclass">
+                          {elective.name}
+                        </p>
+                      );
+                    })}
+                    {secondAltElectiveChoices.map((elective) => {
+                      return (
+                        <p key={elective.name} className="altclass">
+                          {elective.name}
+                        </p>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </>
@@ -317,6 +353,15 @@ function App() {
         </div>
         {grade !== "" && (
           <>
+            <label htmlFor="uid">Enter your user ID</label>
+            <input
+              type="text"
+              id="uid"
+              name="uid"
+              className="textbox"
+              required
+            />
+
             <button disabled={step !== 4}>Submit</button>
             <button onClick={(e) => handleReset(e)}>Reset Everything</button>
           </>

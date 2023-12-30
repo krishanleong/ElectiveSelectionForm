@@ -7,10 +7,9 @@ import { electiveData } from "./utils/electives";
 function App() {
   const [grade, setGrade] = useState("5th");
   const [math7th, setMath7th] = useState("");
-
   const [electives, setElectives] = useState(electiveData);
-
-  const maxElectives = math7th === "7thalgebra" ? 2 : 1;
+  const [step, setStep] = useState(1);
+  const maxElectives = (math7th === "7thalgebra" ? 2 : 1) + step - 1;
 
   console.log("Max electives", maxElectives);
 
@@ -33,7 +32,7 @@ function App() {
     (elective) => elective.check === true && elective.length === 1
   );
 
-  console.log("electives", electiveChoices);
+  console.log("electives", electives);
   const handleOnChange = (position) => {
     const updatedElectives = electives.map((elective, index) => {
       if (index === position) {
@@ -44,6 +43,34 @@ function App() {
 
     setElectives(updatedElectives);
   };
+
+  function handleLock(e) {
+    e.preventDefault();
+    if (step === 1) {
+      const updatedElectives = electives.map((elective) =>
+        elective.check ? { ...elective, chosen: true } : elective
+      );
+      setElectives(updatedElectives);
+    }
+    if (step === 2) {
+      const updatedElectives = electives.map((elective) =>
+        elective.check && !elective.chosen
+          ? { ...elective, chosen: true }
+          : elective
+      );
+      setElectives(updatedElectives);
+    }
+    if (step === 3) {
+      const updatedElectives = electives.map((elective) =>
+        elective.check && !elective.chosen
+          ? { ...elective, chosen: true }
+          : elective
+      );
+      setElectives(updatedElectives);
+    }
+
+    if (step !== 4) setStep(() => step + 1);
+  }
 
   return (
     <div className="container">
@@ -134,8 +161,15 @@ function App() {
                 </label>
               </div>
               <div className="Electives">
-                <h3>Select your Electives</h3>
-                <button>Lock in</button>
+                <h3 style={{ display: "inline" }}>
+                  {step === 1 && "Select your Electives"}
+                  {step === 2 && "Select your first Alternate Electives"}
+                  {step === 3 && "Select your second Alternate Electives"}
+                  {step === 4 && "Elective Selection Complete"}
+                </h3>
+                {step !== 4 && (
+                  <button onClick={(e) => handleLock(e)}>Lock in</button>
+                )}
                 <div className="electiveContainer">
                   {electives.map((elective, index) => {
                     return (
@@ -148,8 +182,10 @@ function App() {
                           checked={elective.check}
                           onChange={() => handleOnChange(index)}
                           disabled={
-                            currElectives + elective.length > maxElectives &&
-                            elective.check === false
+                            (currElectives + elective.length > maxElectives &&
+                              elective.check === false) ||
+                            elective.chosen === true ||
+                            step === 4
                           }
                         />
                         <label
@@ -256,6 +292,7 @@ function App() {
                   )}
                   <div className="core class">History</div>
                 </div>
+                <div className="column">Alternates</div>
               </div>
             </>
           )}
@@ -272,3 +309,7 @@ function App() {
 }
 
 export default App;
+
+function displayElective({ styles, name }) {
+  return <div className={styles}> name</div>;
+}

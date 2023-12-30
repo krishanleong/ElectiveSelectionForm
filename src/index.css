@@ -95,19 +95,39 @@ h3 {
 }
 .half {
   background-color: #a3ff16;
+  transition: 0.6s;
   height: 25px;
 }
 
 .half:hover {
   background-color: #89e200;
+  transition: 0.6s;
 }
 
 .full {
   background-color: #e5c062;
+  transition: 0.6s;
 }
 .full:hover {
   background-color: #daa520;
+  transition: 0.6s;
 }
 .column {
   width: 19%;
+}
+button {
+  background-color: lightpink;
+  margin: 0.3rem 0.7rem 0.3rem 4rem;
+  font-weight: 700;
+  width: 23%;
+  height: 35px;
+  color: black;
+  border-radius: 5px;
+  border: none;
+  transition: 0.6s;
+}
+
+button:hover {
+  background-color: hsl(172, 67%, 45%);
+  transition: 0.6s;
 }

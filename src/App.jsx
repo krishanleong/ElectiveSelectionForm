@@ -5,46 +5,73 @@ import "./App.css";
 import { electiveData } from "./utils/electives";
 
 function App() {
-  const [grade, setGrade] = useState("");
+  const [grade, setGrade] = useState(0);
   const [math7th, setMath7th] = useState("");
+  const [math8th, setMath8th] = useState("");
   const [electives, setElectives] = useState(electiveData);
   const [step, setStep] = useState(1);
-  const maxElectives = (math7th === "7thalgebra" ? 2 : 1) + step - 1;
 
+  let maxElectives = 0;
+  if (grade === 6) maxElectives = (math7th === "7thalgebra" ? 2 : 1) + step - 1;
+  else maxElectives = 3 + step - 1;
   console.log("Max electives", maxElectives);
+
+  function handleSetGrade(g) {
+    console.log("selected grade", g);
+    setGrade(g);
+    setElectives(electiveData.filter((e) => e.grade.includes(g + 1)));
+  }
 
   const currElectives = electives.reduce(
     (accumulator, elective) =>
       accumulator + (elective.check && elective.length),
     0
   );
-
-  console.log("curr electives", currElectives);
-
+  console.log(currElectives);
   const electiveChoices = electives.filter(
     (elective) =>
       elective.check === true &&
       elective.firstAlt === false &&
       elective.secondAlt === false
   );
-  const semElectiveChoices = electives.filter(
-    (elective) =>
-      elective.check === true &&
-      elective.length === 0.5 &&
-      elective.chosen === true
-  );
+  const semElectiveChoices =
+    step === 1
+      ? electives.filter(
+          (elective) => elective.check === true && elective.length === 0.5
+        )
+      : electives.filter(
+          (elective) =>
+            elective.check === true &&
+            elective.length === 0.5 &&
+            elective.chosen === true
+        );
 
-  const yearElectiveChoices = electives.filter(
+  const yearElectiveChoices =
+    step === 1
+      ? electives.filter(
+          (elective) => elective.check === true && elective.length === 1
+        )
+      : electives.filter(
+          (elective) =>
+            elective.check === true &&
+            elective.length === 1 &&
+            elective.chosen === true
+        );
+
+  if (semElectiveChoices) console.log("Sem", semElectiveChoices);
+  if (yearElectiveChoices) console.log("Year", yearElectiveChoices);
+
+  const firstAltElectiveChoices = electives.filter(
     (elective) =>
       elective.check === true &&
-      elective.chosen === true &&
-      elective.length === 1
-  );
-  const firstAltElectiveChoices = electives.filter(
-    (elective) => elective.check === true && elective.firstAlt === true
+      elective.firstAlt === true &&
+      elective.chosen === false
   );
   const secondAltElectiveChoices = electives.filter(
-    (elective) => elective.check === true && elective.secondAlt === true
+    (elective) =>
+      elective.check === true &&
+      elective.secondAlt === true &&
+      elective.chosen === false
   );
 
   console.log("step", step);
@@ -71,13 +98,13 @@ function App() {
 
   function handleLock(e) {
     e.preventDefault();
-    if (step === 1) {
+    if (step === 1 && currElectives === maxElectives) {
       const updatedElectives = electives.map((elective) =>
         elective.check ? { ...elective, chosen: true } : elective
       );
       setElectives(updatedElectives);
     }
-    if (step === 2) {
+    if (step === 2 && currElectives === maxElectives) {
       const updatedElectives = electives.map((elective) =>
         elective.check && !elective.chosen
           ? { ...elective, firstAlt: true }
@@ -85,7 +112,7 @@ function App() {
       );
       setElectives(updatedElectives);
     }
-    if (step === 3) {
+    if (step === 3 && currElectives === maxElectives) {
       const updatedElectives = electives.map((elective) =>
         elective.check && !elective.chosen && !elective.firstAlt
           ? { ...elective, secondAlt: true }
@@ -94,7 +121,9 @@ function App() {
       setElectives(updatedElectives);
     }
 
-    if (step !== 4) setStep(() => step + 1);
+    if (step !== 4) {
+      if (currElectives === maxElectives) setStep(() => step + 1);
+    }
   }
 
   return (
@@ -110,8 +139,8 @@ function App() {
               type="radio"
               id="6th"
               name="grade"
-              value="6th"
-              onChange={() => setGrade("6th")}
+              checked={grade === 6}
+              onChange={() => handleSetGrade(6)}
             />
             <label htmlFor="6th" className="radiolabel">
               6th
@@ -120,8 +149,8 @@ function App() {
               type="radio"
               id="7th"
               name="grade"
-              value="7th"
-              onChange={() => setGrade("7th")}
+              checked={grade === 7}
+              onChange={() => handleSetGrade(7)}
             />
             <label htmlFor="7th" className="radiolabel">
               7th
@@ -129,7 +158,7 @@ function App() {
           </div>
         </div>
         <div className="coreClasses">
-          {grade === "6th" && (
+          {grade === 6 && (
             <>
               <div className="Math">
                 <h3>Select your math class</h3>
@@ -261,7 +290,7 @@ function App() {
                     {semElectiveChoices.length === 1 && (
                       <>
                         <div className="class half">
-                          {electiveChoices[0].name}
+                          {semElectiveChoices[0].name}
                         </div>
                         <div className="halfclass">elective block</div>
                       </>
@@ -269,17 +298,17 @@ function App() {
                     {semElectiveChoices.length >= 2 && (
                       <>
                         <div className="class half">
-                          {electiveChoices[0].name}
+                          {semElectiveChoices[0].name}
                         </div>
                         <div className="class half">
-                          {electiveChoices[1].name}
+                          {semElectiveChoices[1].name}
                         </div>
                       </>
                     )}
                     {yearElectiveChoices.length >= 1 &&
                       semElectiveChoices.length === 0 && (
                         <div className="class full">
-                          {electiveChoices[0].name}
+                          {yearElectiveChoices[0].name}
                         </div>
                       )}
                     {math7th === "7thmath" ? (
@@ -292,7 +321,7 @@ function App() {
                         {semElectiveChoices.length === 3 && (
                           <>
                             <div className="class half">
-                              {electiveChoices[2].name}
+                              {semElectiveChoices[2].name}
                             </div>
                             <div className="halfclass">elective block</div>
                           </>
@@ -300,10 +329,10 @@ function App() {
                         {semElectiveChoices.length === 4 && (
                           <>
                             <div className="class half">
-                              {electiveChoices[2].name}
+                              {semElectiveChoices[2].name}
                             </div>
                             <div className="class half">
-                              {electiveChoices[3].name}
+                              {semElectiveChoices[3].name}
                             </div>
                           </>
                         )}
@@ -345,9 +374,289 @@ function App() {
               )}
             </>
           )}
-          {grade === "7th" && (
+          {grade === 7 && (
             <>
-              <p>to be determined</p>
+              <div className="Math">
+                <h3>Select your math class</h3>
+                <input
+                  type="radio"
+                  id="8thmath"
+                  name="8thmath"
+                  checked={math8th === "8thmath"}
+                  onChange={() => setMath8th("8thmath")}
+                />
+                <label htmlFor="8thmath" className="radiolabel">
+                  8th Grade Math
+                </label>
+                <input
+                  type="radio"
+                  id="8thalgebra"
+                  name="8thalgebra"
+                  checked={math8th === "8thalgebra"}
+                  onChange={() => setMath8th("8thalgebra")}
+                />
+                <label htmlFor="8thalgebra" className="radiolabel">
+                  8th Grade Algebra
+                </label>
+                <input
+                  type="radio"
+                  id="8thgeometry"
+                  name="8thgeometry"
+                  checked={math8th === "8thgeometry"}
+                  onChange={() => setMath8th("8thgeometry")}
+                />
+                <label htmlFor="8thgeometry" className="radiolabel">
+                  8th Grade Geometry
+                </label>
+              </div>
+
+              <div className="Core">
+                <h3>Required 8th grade classes</h3>
+                <input
+                  type="checkbox"
+                  id="8thla"
+                  name="8thla"
+                  disabled
+                  checked
+                />
+                <label htmlFor="8thla" className="checklabel">
+                  8th Grade Language Arts
+                </label>
+                <input
+                  type="checkbox"
+                  id="8thscience"
+                  name="8thscience"
+                  disabled
+                  checked
+                />
+                <label htmlFor="8thscience" className="checklabel">
+                  8th Grade Science
+                </label>
+                <input
+                  type="checkbox"
+                  id="8thhistory"
+                  name="8thhistory"
+                  disabled
+                  checked
+                />
+                <label htmlFor="8thhistory" className="checklabel">
+                  8th Grade History
+                </label>
+              </div>
+              {math8th !== "" && (
+                <div className="Electives">
+                  <h3 style={{ display: "inline" }}>
+                    {step === 1 && "Select your Electives"}
+                    {step === 2 && "Select your first Alternate Electives"}
+                    {step === 3 && "Select your second Alternate Electives"}
+                    {step === 4 && "Elective Selection Complete"}
+                  </h3>
+                  {step !== 4 && (
+                    <button onClick={(e) => handleLock(e)}>Lock in</button>
+                  )}
+                  <div className="electiveContainer">
+                    {electives.map((elective, index) => {
+                      return (
+                        <div className="electivechoice">
+                          <input
+                            type="checkbox"
+                            id={elective.name}
+                            name={elective.name}
+                            key={elective.name}
+                            checked={elective.check}
+                            onChange={() => handleOnChange(index)}
+                            disabled={
+                              (currElectives + elective.length > maxElectives &&
+                                elective.check === false) ||
+                              elective.chosen === true ||
+                              elective.firstAlt === true ||
+                              step === 4
+                            }
+                          />
+                          <label
+                            htmlFor={elective.name}
+                            className={
+                              elective.length === 0.5
+                                ? "checklabel half"
+                                : "checklabel full"
+                            }
+                          >
+                            {elective.name} -{" "}
+                            {elective.length === 0.5 ? "semester" : "full year"}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+              {math8th !== "" && (
+                <div className="Schedule">
+                  <div className="column">
+                    <div className="colheader">Block</div>
+                    <div className="class">1st block</div>
+                    <div className="class">2nd block</div>
+                    <div className="class">3rd block</div>
+                    <div className="class">4th block</div>
+                  </div>
+                  <div className="column">
+                    <div className="colheader">A Day</div>
+                    <div className="core class">Language Arts</div>
+                    {/* THIRD ELECTIVE SPOT */}
+                    {
+                      <>
+                        {semElectiveChoices.length +
+                          yearElectiveChoices.length * 2 <
+                          5 && <div className="class">elective block</div>}
+                        {semElectiveChoices.length === 5 && (
+                          <>
+                            <div className="class half">
+                              {semElectiveChoices[4].name}
+                            </div>
+                            <div className="halfclass">elective block</div>
+                          </>
+                        )}
+                        {semElectiveChoices.length === 6 && (
+                          <>
+                            <div className="class half">
+                              {semElectiveChoices[4].name}
+                            </div>
+                            <div className="class half">
+                              {semElectiveChoices[5].name}
+                            </div>
+                          </>
+                        )}
+                        {yearElectiveChoices.length === 1 &&
+                          semElectiveChoices.length +
+                            yearElectiveChoices.length * 2 >=
+                            5 &&
+                          semElectiveChoices.length !== 0 && (
+                            <div className="class full">
+                              {yearElectiveChoices[0].name}
+                            </div>
+                          )}
+
+                        {yearElectiveChoices.length === 2 &&
+                          semElectiveChoices.length +
+                            yearElectiveChoices.length * 2 >=
+                            5 && (
+                            <div className="class full">
+                              {yearElectiveChoices[1].name}
+                            </div>
+                          )}
+                        {yearElectiveChoices.length === 3 && (
+                          <div className="class full">
+                            {yearElectiveChoices[2].name}
+                          </div>
+                        )}
+                      </>
+                    }
+                    <div className="core class">History</div>
+                    <div className="full class">Health/PE</div>
+                  </div>
+                  <div className="column">
+                    <div className="colheader">B Day</div>
+                    <div className="core class">{math8th}</div>
+
+                    {/* Elective block start ***************************** */}
+                    {electiveChoices.length === 0 && (
+                      <div className="class">elective block</div>
+                    )}
+                    {semElectiveChoices.length === 1 && (
+                      <>
+                        <div className="class half">
+                          {semElectiveChoices[0].name}
+                        </div>
+                        <div className="halfclass">elective block</div>
+                      </>
+                    )}
+                    {semElectiveChoices.length >= 2 && (
+                      <>
+                        <div className="class half">
+                          {semElectiveChoices[0].name}
+                        </div>
+                        <div className="class half">
+                          {semElectiveChoices[1].name}
+                        </div>
+                      </>
+                    )}
+                    {yearElectiveChoices.length >= 1 &&
+                      semElectiveChoices.length === 0 && (
+                        <div className="class full">
+                          {yearElectiveChoices[0].name}
+                        </div>
+                      )}
+
+                    <div className="core class">History</div>
+                    {
+                      // Second ELECTIVE SLOT
+                      <>
+                        {semElectiveChoices.length +
+                          yearElectiveChoices.length * 2 <
+                          3 && <div className="class">elective block</div>}
+                        {semElectiveChoices.length === 3 && (
+                          <>
+                            <div className="class half">
+                              {semElectiveChoices[2].name}
+                            </div>
+                            <div className="halfclass">elective block</div>
+                          </>
+                        )}
+                        {semElectiveChoices.length >= 4 && (
+                          <>
+                            <div className="class half">
+                              {semElectiveChoices[2].name}
+                            </div>
+                            <div className="class half">
+                              {semElectiveChoices[3].name}
+                            </div>
+                          </>
+                        )}
+
+                        {yearElectiveChoices.length === 1 &&
+                          semElectiveChoices.length > 0 &&
+                          semElectiveChoices.length < 3 && (
+                            <div className="class full">
+                              {yearElectiveChoices[0].name}
+                            </div>
+                          )}
+
+                        {yearElectiveChoices.length >= 2 &&
+                          semElectiveChoices.length === 0 && (
+                            <div className="class full">
+                              {yearElectiveChoices[1].name}
+                            </div>
+                          )}
+
+                        {yearElectiveChoices.length >= 2 &&
+                          semElectiveChoices.length > 0 &&
+                          semElectiveChoices.length < 3 && (
+                            <div className="class full">
+                              {yearElectiveChoices[0].name}
+                            </div>
+                          )}
+                      </>
+                    }
+                  </div>
+                  <div className="column">
+                    <div className="colheader">Alternates</div>
+                    {firstAltElectiveChoices.map((elective) => {
+                      return (
+                        <p key={elective.name} className="altclass">
+                          {elective.name}
+                        </p>
+                      );
+                    })}
+                    {secondAltElectiveChoices.map((elective) => {
+                      return (
+                        <p key={elective.name} className="altclass">
+                          {elective.name}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>

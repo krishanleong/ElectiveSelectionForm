@@ -6,6 +6,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7 Art",
@@ -14,6 +15,25 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7],
+  },
+  {
+    name: "8 Art",
+    length: 0.5,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [8],
+  },
+  {
+    name: "7/8 Game Design",
+    length: 0.5,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7/8 Photography",
@@ -22,6 +42,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7/8 STEM",
@@ -30,6 +51,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7/8 Drama",
@@ -38,6 +60,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   // {
   //   name: "7/8 Creative Writing",
@@ -50,6 +73,47 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
+  },
+
+  {
+    name: "7/8 Broadcast Journalism",
+    length: 1,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [7, 8],
+  },
+
+  {
+    name: "8 Yearbook",
+    length: 1,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [8],
+  },
+
+  {
+    name: "8 AVID",
+    length: 1,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [8],
+  },
+
+  {
+    name: "8 Athletic Conditioning",
+    length: 1,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [8],
   },
   {
     name: "7/8 Band",
@@ -58,6 +122,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7/8 Choir",
@@ -66,6 +131,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7/8 Advanced Coding",
@@ -74,6 +140,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7/8 Guitar",
@@ -82,6 +149,16 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
+  },
+  {
+    name: "7 AVID",
+    length: 1,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [7],
   },
   {
     name: "7/8 Strings",
@@ -90,6 +167,7 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7, 8],
   },
   {
     name: "7 Spanish",
@@ -98,5 +176,16 @@ export const electiveData = [
     chosen: false,
     firstAlt: false,
     secondAlt: false,
+    grade: [7],
+  },
+
+  {
+    name: "8 Study Hall",
+    length: 1,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [8],
   },
 ];

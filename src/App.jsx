@@ -22,14 +22,13 @@ import { electiveData } from "./utils/electives";
 
 function App() {
   const [grade, setGrade] = useState(0);
-  const [math7th, setMath7th] = useState("");
-  const [math8th, setMath8th] = useState("");
+  const [math, setMath] = useState("");
   const [electives, setElectives] = useState(electiveData);
   const [step, setStep] = useState(1);
   const [lunchNumber, setLunchNumber] = useState(0);
 
   let maxElectives = 0;
-  if (grade === 6) maxElectives = (math7th === "7thalgebra" ? 2 : 1) + step - 1;
+  if (grade === 6) maxElectives = (math === "7thalgebra" ? 2 : 1) + step - 1;
   else maxElectives = 3 + step - 1;
   console.log("Max electives", maxElectives);
 
@@ -40,7 +39,7 @@ function App() {
   function handleSetGrade(g) {
     console.log("selected grade", g);
 
-    setMath7th("");
+    setMath("");
     setStep(1);
     setElectives(electiveData);
     setGrade(g);
@@ -116,7 +115,7 @@ function App() {
   function handleReset(e) {
     e.preventDefault();
 
-    setMath7th("");
+    setMath("");
     setStep(1);
     setElectives(electiveData);
   }
@@ -180,7 +179,7 @@ function App() {
     const data = {
       lunchNumber,
       grade,
-      math: math7th || math8th,
+      math,
       elec1: firstElec,
       elec2: secElec,
       elec3: thirdElec,
@@ -200,6 +199,16 @@ function App() {
         <div className="gradeSelection">
           <h2>Select your current grade</h2>
           <div className="mathcontainer">
+            <input
+              type="radio"
+              id="5th"
+              name="grade"
+              checked={grade === 5}
+              onChange={() => handleSetGrade(5)}
+            />
+            <label htmlFor="5th" className="radiolabel">
+              5th
+            </label>
             <input
               type="radio"
               id="6th"
@@ -225,14 +234,15 @@ function App() {
         <div className="coreClasses">
           {grade === 6 && (
             <>
+              {/* <Math grade={6} handleChangeMath={setMath7th} /> */}
               <div className="Math">
                 <h3>Select your math class</h3>
                 <input
                   type="radio"
                   id="7thmath"
                   name="7thmath"
-                  checked={math7th === "7thmath"}
-                  onChange={() => setMath7th("7thmath")}
+                  checked={math === "7thmath"}
+                  onChange={() => setMath("7thmath")}
                 />
                 <label htmlFor="7thmath" className="radiolabel">
                   7th Grade Math
@@ -241,8 +251,8 @@ function App() {
                   type="radio"
                   id="7thalgebra"
                   name="7thmath"
-                  checked={math7th === "7thalgebra"}
-                  onChange={() => setMath7th("7thalgebra")}
+                  checked={math === "7thalgebra"}
+                  onChange={() => setMath("7thalgebra")}
                 />
                 <label htmlFor="7thalgebra" className="radiolabel">
                   7th Grade Algebra
@@ -282,7 +292,7 @@ function App() {
                   7th Grade History
                 </label>
               </div>
-              {math7th !== "" && (
+              {math !== "" && (
                 <div className="Electives">
                   <h3 style={{ display: "inline" }}>
                     {step === 1 && "Select your Electives"}
@@ -329,7 +339,7 @@ function App() {
                   </div>
                 </div>
               )}
-              {math7th !== "" && (
+              {math !== "" && (
                 <div className="Schedule">
                   <div className="column">
                     <div className="colheader">Block</div>
@@ -342,7 +352,7 @@ function App() {
                     <div className="colheader">A Day</div>
                     <div className="core class">Language Arts</div>
                     <div className="full class">Health/PE</div>
-                    <div className="core class">{math7th}</div>
+                    <div className="core class">{math}</div>
                     <div className="core class">Science</div>
                   </div>
                   <div className="column">
@@ -376,8 +386,8 @@ function App() {
                           {yearElectiveChoices[0].name}
                         </div>
                       )}
-                    {math7th === "7thmath" ? (
-                      <div className="core class">{math7th}</div>
+                    {math === "7thmath" ? (
+                      <div className="core class">{math}</div>
                     ) : (
                       <>
                         {semElectiveChoices.length +
@@ -447,8 +457,8 @@ function App() {
                   type="radio"
                   id="8thmath"
                   name="8thmath"
-                  checked={math8th === "8thmath"}
-                  onChange={() => setMath8th("8thmath")}
+                  checked={math === "8thmath"}
+                  onChange={() => setMath("8thmath")}
                 />
                 <label htmlFor="8thmath" className="radiolabel">
                   8th Grade Math
@@ -457,8 +467,8 @@ function App() {
                   type="radio"
                   id="8thalgebra"
                   name="8thalgebra"
-                  checked={math8th === "8thalgebra"}
-                  onChange={() => setMath8th("8thalgebra")}
+                  checked={math === "8thalgebra"}
+                  onChange={() => setMath("8thalgebra")}
                 />
                 <label htmlFor="8thalgebra" className="radiolabel">
                   8th Grade Algebra
@@ -467,8 +477,8 @@ function App() {
                   type="radio"
                   id="8thgeometry"
                   name="8thgeometry"
-                  checked={math8th === "8thgeometry"}
-                  onChange={() => setMath8th("8thgeometry")}
+                  checked={math === "8thgeometry"}
+                  onChange={() => setMath("8thgeometry")}
                 />
                 <label htmlFor="8thgeometry" className="radiolabel">
                   8th Grade Geometry
@@ -508,7 +518,7 @@ function App() {
                   8th Grade History
                 </label>
               </div>
-              {math8th !== "" && (
+              {math !== "" && (
                 <div className="Electives">
                   <h3 style={{ display: "inline" }}>
                     {step === 1 && "Select your Electives"}
@@ -556,7 +566,7 @@ function App() {
                   </div>
                 </div>
               )}
-              {math8th !== "" && (
+              {math !== "" && (
                 <div className="Schedule">
                   <div className="column">
                     <div className="colheader">Block</div>
@@ -622,7 +632,7 @@ function App() {
                   </div>
                   <div className="column">
                     <div className="colheader">B Day</div>
-                    <div className="core class">{math8th}</div>
+                    <div className="core class">{math}</div>
 
                     {/* Elective block start ***************************** */}
                     {electiveChoices.length === 0 && (
@@ -755,3 +765,10 @@ export default App;
 function displayElective({ styles, name }) {
   return <div className={styles}> name</div>;
 }
+
+// function Math ({grade})
+// {
+//   return (
+
+//   )
+// }

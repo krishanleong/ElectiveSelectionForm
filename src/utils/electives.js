@@ -7,6 +7,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7 Art",
@@ -16,6 +17,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7],
+    description:
+      "Students will explore deeper the Elements and Principles of Design:  line, color, shape, texture, value and space. They will create collages, tessellations, portraits, textile art, work with clay, and more. Using traditional and contemporary artists as influences, students will experiment with many media types enhancing their creativity and boosting their confidence as individuals and artists.",
   },
   {
     name: "8 Art",
@@ -25,6 +28,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
+    description: "",
   },
   {
     name: "7/8 Game Design",
@@ -34,6 +38,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7/8 Photography",
@@ -43,6 +48,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7/8 STEM",
@@ -52,6 +58,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7/8 Drama",
@@ -61,11 +68,18 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
-  // {
-  //   name: "7/8 Creative Writing",
-  //   length: 0.5,
-  // },
+  {
+    name: "7/8 Creative Writing",
+    length: 0.5,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [7, 8],
+    description: "",
+  },
   {
     name: "7/8 Keyboarding",
     length: 0.5,
@@ -74,6 +88,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
 
   {
@@ -84,6 +99,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
 
   {
@@ -94,6 +110,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
+    description: "",
   },
 
   {
@@ -104,6 +121,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
+    description: "",
   },
 
   {
@@ -114,6 +132,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
+    description: "",
   },
   {
     name: "7/8 Band",
@@ -123,6 +142,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7/8 Choir",
@@ -132,6 +152,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7/8 Advanced Coding",
@@ -141,6 +162,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7/8 Guitar",
@@ -150,6 +172,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7 AVID",
@@ -159,6 +182,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7],
+    description: "",
   },
   {
     name: "7/8 Strings",
@@ -168,6 +192,7 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
+    description: "",
   },
   {
     name: "7 Spanish",
@@ -177,15 +202,26 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7],
+    description: "",
   },
-
   {
-    name: "8 Study Hall",
+    name: "8 Spanish",
     length: 1,
     check: false,
     chosen: false,
     firstAlt: false,
     secondAlt: false,
     grade: [8],
+    description: "",
   },
+
+  // {
+  //   name: "8 Study Hall",
+  //   length: 1,
+  //   check: false,
+  //   chosen: false,
+  //   firstAlt: false,
+  //   secondAlt: false,
+  //   grade: [8],
+  // },
 ];

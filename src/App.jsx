@@ -3,6 +3,22 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { electiveData } from "./utils/electives";
+// const { google } = require("googleapis");
+// const keys = require("./google.json");
+
+// const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
+//   "https://www.googleapis.com/auth/spreadsheets",
+// ]);
+
+// client.authorize(function (err, tokens) {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   } else {
+//     console.log("Connected!");
+//     gsrun(client);
+//   }
+// });
 
 function App() {
   const [grade, setGrade] = useState(0);
@@ -10,14 +26,23 @@ function App() {
   const [math8th, setMath8th] = useState("");
   const [electives, setElectives] = useState(electiveData);
   const [step, setStep] = useState(1);
+  const [lunchNumber, setLunchNumber] = useState(0);
 
   let maxElectives = 0;
   if (grade === 6) maxElectives = (math7th === "7thalgebra" ? 2 : 1) + step - 1;
   else maxElectives = 3 + step - 1;
   console.log("Max electives", maxElectives);
 
+  function handleMath(mathclass) {
+    setMath(mathclass);
+    // if (grade === 7) setElectives(electiveData);
+  }
   function handleSetGrade(g) {
     console.log("selected grade", g);
+
+    setMath7th("");
+    setStep(1);
+    setElectives(electiveData);
     setGrade(g);
     setElectives(electiveData.filter((e) => e.grade.includes(g + 1)));
   }
@@ -126,12 +151,52 @@ function App() {
     }
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    let temp = electives.filter((elective) => elective.chosen === true)[0];
+    const firstElec = temp ? temp.name : "";
+    temp = electives.filter((elective) => elective.chosen === true)[1];
+    const secElec = temp ? temp.name : "";
+    temp = electives.filter((elective) => elective.chosen === true)[2];
+    const thirdElec = temp ? temp.name : "";
+    temp = electives.filter((elective) => elective.chosen === true)[3];
+    const fourthElec = temp ? temp.name : "";
+    temp = electives.filter((elective) => elective.chosen === true)[4];
+    const fifthElec = temp ? temp.name : "";
+    temp = electives.filter((elective) => elective.chosen === true)[5];
+    const sixthElec = temp ? temp.name : "";
+
+    temp = electives.filter((elective) => elective.firstAlt === true)[0];
+    const firstFirstAlt = temp ? temp.name : "";
+    temp = electives.filter((elective) => elective.firstAlt === true)[1];
+    const secFirstAlt = temp ? temp.name : "";
+
+    temp = electives.filter((elective) => elective.secondAlt === true)[0];
+    const firstSecAlt = temp ? temp.name : "";
+    temp = electives.filter((elective) => elective.secondAlt === true)[1];
+    const secSecAlt = temp ? temp.name : "";
+
+    const data = {
+      lunchNumber,
+      grade,
+      math: math7th || math8th,
+      elec1: firstElec,
+      elec2: secElec,
+      elec3: thirdElec,
+      elec4: fourthElec,
+      elec5: fifthElec,
+      elec6: sixthElec,
+      firstPrimaryAlt: firstFirstAlt,
+      secPrimaryAlt: secFirstAlt,
+      firstSecondaryAlt: firstSecAlt,
+      secSecondaryAlt: secSecAlt,
+    };
+    console.log("Data", data);
+  }
   return (
     <div className="container">
-      <form
-        method="POST"
-        action="https://script.google.com/macros/s/AKfycbzdmrSZdJvEAujZAul8cPcbcwNgTEUzfjhcT-DIpfIO-Hyoa6SPJCgYTqItvo0WgmaZ3g/exec"
-      >
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="gradeSelection">
           <h2>Select your current grade</h2>
           <div className="mathcontainer">
@@ -175,7 +240,7 @@ function App() {
                 <input
                   type="radio"
                   id="7thalgebra"
-                  name="7thalgebra"
+                  name="7thmath"
                   checked={math7th === "7thalgebra"}
                   onChange={() => setMath7th("7thalgebra")}
                 />
@@ -475,6 +540,7 @@ function App() {
                           />
                           <label
                             htmlFor={elective.name}
+                            title={elective.description}
                             className={
                               elective.length === 0.5
                                 ? "checklabel half"
@@ -662,13 +728,17 @@ function App() {
         </div>
         {grade !== "" && (
           <>
-            <label htmlFor="uid">Enter your user ID</label>
+            <label htmlFor="lunchnumber">Lunch Number</label>
             <input
-              type="text"
-              id="uid"
-              name="uid"
+              type="number"
+              id="lunchnumber"
+              name="lunchnumber"
               className="textbox"
+              maxLength={5}
+              minLength={5}
+              value={lunchNumber}
               required
+              onChange={(e) => setLunchNumber(e.target.value)}
             />
 
             <button disabled={step !== 4}>Submit</button>

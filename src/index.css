@@ -142,3 +142,8 @@ button:hover {
   font-size: smaller;
   margin-left: 40px;
 }
+
+.textbox {
+  margin-left: 10px;
+  width: 100px;
+}

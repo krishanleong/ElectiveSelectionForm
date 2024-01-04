@@ -69,7 +69,7 @@ h3 {
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 50px;
+  height: 52px;
   padding: 4px;
   border: black 1px solid;
 }
@@ -79,7 +79,27 @@ h3 {
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 25px;
+  height: 26px;
+  padding: 4px;
+  border: black 1px solid;
+}
+.threequarterclass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 39px;
+  padding: 4px;
+  border: black 1px solid;
+}
+
+.quarterclass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 13px;
+
   padding: 4px;
   border: black 1px solid;
 }
@@ -98,10 +118,27 @@ h3 {
 .half {
   background-color: #a3ff16;
   transition: 0.6s;
-  height: 25px;
+  height: 26px;
 }
 
 .half:hover {
+  background-color: #89e200;
+  transition: 0.6s;
+}
+
+.quarter {
+  background-color: #a3ff16;
+  transition: 0.6s;
+  height: 13px;
+}
+.Schedule .quarter {
+  font-size: 11px;
+}
+.Schedule .quarterclass {
+  font-size: 11px;
+}
+
+.quarter:hover {
   background-color: #89e200;
   transition: 0.6s;
 }
@@ -146,4 +183,9 @@ button:hover {
 .textbox {
   margin-left: 10px;
   width: 100px;
+}
+
+.radio-button-wrapper {
+  display: inline-block;
+  margin-right: 10px; /* Optional: Add some margin to the right of each radio button for spacing */
 }

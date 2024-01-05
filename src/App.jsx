@@ -3,25 +3,15 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { electiveData } from "./utils/electives";
-// const { google } = require("googleapis");
-// const keys = require("./google.json");
-
-// const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
-//   "https://www.googleapis.com/auth/spreadsheets",
-// ]);
-
-// client.authorize(function (err, tokens) {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   } else {
-//     console.log("Connected!");
-//     gsrun(client);
-//   }
-// });
 
 const Grade7MathClasses = ["7th Grade Math", "7th Grade Algebra"];
 const Grade6MathClasses = ["6th Grade Math", "Triple Compacted Math"];
+
+const Grade8MathClasses = [
+  "8th Grade Math",
+  "8th Grade Algebra",
+  "8th Grade Geometry",
+];
 
 function App() {
   const [grade, setGrade] = useState(0);
@@ -29,12 +19,12 @@ function App() {
   const [electives, setElectives] = useState(electiveData);
   const [step, setStep] = useState(1);
   const [lunchNumber, setLunchNumber] = useState(0);
+  const [elementary, setElementary] = useState("");
 
   let maxElectives = 0;
   function handleChangeMath(mathclass) {
     setMath(mathclass);
     console.log(mathclass);
-    // if (grade === 7) setElectives(electiveData);
   }
   function handleSetGrade(g) {
     console.log("selected grade", g);
@@ -180,47 +170,29 @@ function App() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
-    let temp = electives.filter((elective) => elective.chosen === true)[0];
-    const firstElec = temp ? temp.name : "";
-    temp = electives.filter((elective) => elective.chosen === true)[1];
-    const secElec = temp ? temp.name : "";
-    temp = electives.filter((elective) => elective.chosen === true)[2];
-    const thirdElec = temp ? temp.name : "";
-    temp = electives.filter((elective) => elective.chosen === true)[3];
-    const fourthElec = temp ? temp.name : "";
-    temp = electives.filter((elective) => elective.chosen === true)[4];
-    const fifthElec = temp ? temp.name : "";
-    temp = electives.filter((elective) => elective.chosen === true)[5];
-    const sixthElec = temp ? temp.name : "";
+    document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.disabled = false;
+    });
 
-    temp = electives.filter((elective) => elective.firstAlt === true)[0];
-    const firstFirstAlt = temp ? temp.name : "";
-    temp = electives.filter((elective) => elective.firstAlt === true)[1];
-    const secFirstAlt = temp ? temp.name : "";
+    const formEle = document.querySelector("form");
+    const formDatab = new FormData(formEle);
 
-    temp = electives.filter((elective) => elective.secondAlt === true)[0];
-    const firstSecAlt = temp ? temp.name : "";
-    temp = electives.filter((elective) => elective.secondAlt === true)[1];
-    const secSecAlt = temp ? temp.name : "";
-
-    const data = {
-      lunchNumber,
-      grade,
-      math,
-      elec1: firstElec,
-      elec2: secElec,
-      elec3: thirdElec,
-      elec4: fourthElec,
-      elec5: fifthElec,
-      elec6: sixthElec,
-      firstPrimaryAlt: firstFirstAlt,
-      secPrimaryAlt: secFirstAlt,
-      firstSecondaryAlt: firstSecAlt,
-      secSecondaryAlt: secSecAlt,
-    };
-    console.log("Data", data);
+    fetch(
+      "https://script.google.com/macros/s/AKfycbzdmrSZdJvEAujZAul8cPcbcwNgTEUzfjhcT-DIpfIO-Hyoa6SPJCgYTqItvo0WgmaZ3g/exec",
+      {
+        method: "POST",
+        body: formDatab,
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   return (
     <div className="container">
@@ -228,20 +200,22 @@ function App() {
         <div className="gradeSelection">
           <h2>Select your current grade</h2>
           <div className="mathcontainer">
-            <input
+            {/* <input
               type="radio"
               id="5th"
               name="grade"
+              value="5"
               checked={grade === 5}
               onChange={() => handleSetGrade(5)}
             />
             <label htmlFor="5th" className="radiolabel">
               5th
-            </label>
+            </label> */}
             <input
               type="radio"
               id="6th"
               name="grade"
+              value="6"
               checked={grade === 6}
               onChange={() => handleSetGrade(6)}
             />
@@ -251,6 +225,7 @@ function App() {
             <input
               type="radio"
               id="7th"
+              value="7"
               name="grade"
               checked={grade === 7}
               onChange={() => handleSetGrade(7)}
@@ -260,7 +235,18 @@ function App() {
             </label>
           </div>
         </div>
-
+        {grade === 5 && (
+          <>
+            <label for="pet-select">Choose your school:</label>
+            <select name="elementary" id="elementary-select">
+              <option value="">--Please choose an option--</option>
+              <option value="Stone Robinson">Stone Robinson</option>
+              <option value="Mountain View">Mountain View</option>
+              <option value="Stoney Point">Stoney Point</option>
+              <option value="Agnor Hurt">Agnor Hurt</option>
+            </select>
+          </>
+        )}
         <div className="coreClasses">
           {/* //5th GRADERSSSSSSSSSSSSSSSSSSSSSS */}
           {grade === 5 && (
@@ -271,11 +257,12 @@ function App() {
                   grade={5}
                   handleChangeMath={handleChangeMath}
                   selectedMath={math}
+                  value="Math 6"
                   classText={Grade6MathClasses}
                 />
               </div>
 
-              <div className="Core">
+              {/* <div className="Core">
                 <h3>Required 6th grade classes</h3>
                 <input
                   type="checkbox"
@@ -307,7 +294,7 @@ function App() {
                 <label htmlFor="6thhistory" className="checklabel">
                   6th Grade History
                 </label>
-              </div>
+              </div> */}
               {math !== "" && (
                 <div className="Electives">
                   <h3 style={{ display: "inline" }}>
@@ -451,7 +438,7 @@ function App() {
                 />
               </div>
 
-              <div className="Core">
+              {/* <div className="Core">
                 <h3>Required 7th grade classes</h3>
                 <input
                   type="checkbox"
@@ -483,7 +470,7 @@ function App() {
                 <label htmlFor="7thhistory" className="checklabel">
                   7th Grade History
                 </label>
-              </div>
+              </div> */}
               {math !== "" && (
                 <div className="Electives">
                   <h3 style={{ display: "inline" }}>
@@ -498,12 +485,18 @@ function App() {
                   <div className="electiveContainer">
                     {electives.map((elective, index) => {
                       return (
-                        <div className="electivechoice">
+                        <div className="electivechoice" key={elective.name}>
                           <input
                             type="checkbox"
                             id={elective.name}
                             name={elective.name}
-                            key={elective.name}
+                            value={
+                              elective.chosen
+                                ? "chosen"
+                                : elective.firstAlt
+                                ? "first"
+                                : "second"
+                            }
                             checked={elective.check}
                             onChange={() => handleOnChange(index)}
                             disabled={
@@ -645,40 +638,15 @@ function App() {
             <>
               <div className="Math">
                 <h3>Select your math class</h3>
-
-                <input
-                  type="radio"
-                  id="8thmath"
-                  name="8thmath"
-                  checked={math === "8thmath"}
-                  onChange={() => setMath("8thmath")}
+                <Math
+                  grade={7}
+                  handleChangeMath={handleChangeMath}
+                  selectedMath={math}
+                  classText={Grade8MathClasses}
                 />
-                <label htmlFor="8thmath" className="radiolabel">
-                  8th Grade Math
-                </label>
-                <input
-                  type="radio"
-                  id="8thalgebra"
-                  name="8thalgebra"
-                  checked={math === "8thalgebra"}
-                  onChange={() => setMath("8thalgebra")}
-                />
-                <label htmlFor="8thalgebra" className="radiolabel">
-                  8th Grade Algebra
-                </label>
-                <input
-                  type="radio"
-                  id="8thgeometry"
-                  name="8thgeometry"
-                  checked={math === "8thgeometry"}
-                  onChange={() => setMath("8thgeometry")}
-                />
-                <label htmlFor="8thgeometry" className="radiolabel">
-                  8th Grade Geometry
-                </label>
               </div>
 
-              <div className="Core">
+              {/* <div className="Core">
                 <h3>Required 8th grade classes</h3>
                 <input
                   type="checkbox"
@@ -710,7 +678,7 @@ function App() {
                 <label htmlFor="8thhistory" className="checklabel">
                   8th Grade History
                 </label>
-              </div>
+              </div> */}
               {math !== "" && (
                 <div className="Electives">
                   <h3 style={{ display: "inline" }}>
@@ -733,6 +701,13 @@ function App() {
                             key={elective.name}
                             checked={elective.check}
                             onChange={() => handleOnChange(index)}
+                            value={
+                              elective.chosen
+                                ? "chosen"
+                                : elective.firstAlt
+                                ? "first"
+                                : "second"
+                            }
                             disabled={
                               (currElectives + elective.length > maxElectives &&
                                 elective.check === false) ||
@@ -856,7 +831,7 @@ function App() {
                         </div>
                       )}
 
-                    <div className="core class">History</div>
+                    <div className="core class">Science</div>
                     {
                       // Second ELECTIVE SLOT
                       <>
@@ -948,6 +923,11 @@ function App() {
             <button onClick={(e) => handleReset(e)}>Reset Everything</button>
           </>
         )}
+        <input
+          type="hidden"
+          name="Timestamp"
+          value={new Date().toISOString()}
+        />
       </form>
     </div>
   );
@@ -969,6 +949,7 @@ function Math({ grade, handleChangeMath, selectedMath, classText }) {
               type="radio"
               id={text}
               name="Math"
+              value={selectedMath}
               checked={selectedMath === text}
               onChange={() => handleChangeMath(text)}
             />

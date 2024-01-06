@@ -189,3 +189,6 @@ button:hover {
   display: inline-block;
   margin-right: 10px; /* Optional: Add some margin to the right of each radio button for spacing */
 }
+a {
+  margin-left: 20px;
+}

@@ -152,6 +152,10 @@ function App() {
 
   function handleLock(e) {
     e.preventDefault();
+    if (currElectives !== maxElectives) {
+      alert("Please select more electives");
+      return;
+    }
     if (step === 1 && currElectives === maxElectives) {
       const updatedElectives = electives.map((elective) =>
         elective.check ? { ...elective, chosen: true } : elective

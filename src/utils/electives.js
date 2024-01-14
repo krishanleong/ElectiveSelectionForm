@@ -7,7 +7,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "This elective is for students new to Computer Science and coding.  We will learn the basics of computer programming through a professional grade development environment. Topics like variables, conditionals, loops, graphics and animation will all be explored. During the semester games like Mad Libs, Whack-a-Mole Mini-golf, Snake and Memory will be developed by the student.",
   },
   {
     name: "7 Art",
@@ -28,7 +29,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
-    description: "",
+    description:
+      "Students will focus more on the Principles of Design (rhythm, balance, unity, proportion, variety and emphasis) and how they relate to the Elements of Design in this blast of creative opportunities. There will be individual and collaborative artworks made of paint, clay, textiles, recycled materials and much more. This course will enhance creative thinking skills, help build positive social relationships and reinforce confidence levels within students as individuals and artists.",
   },
   {
     name: "7/8 Game Design",
@@ -38,7 +40,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "The Game Design with Unity class is an exciting and immersive introduction to the world of game design and development using the popular Unity game engine. In this course, students will embark on a creative journey to design and build their own interactive games, from concept to playable prototypes.  This class aims to inspire creativity, problem-solving, and teamwork while fostering a deep understanding of game design concepts and practical development skills using Unity.",
   },
   {
     name: "7/8 Photography",
@@ -48,7 +51,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "This is a digital photography class designed to teach first time photography students basic skills in creating photographs that are creative, informative, and pleasing to the eye. It includes photography history, camera skills, and basic use of Photoshop. Students who have already taken the beginning course may take the advanced course. ",
   },
   {
     name: "7/8 STEM",
@@ -58,7 +62,19 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "Students in this project-oriented class will explore the engineering design process through a series of problem-solving challenges. They will use their knowledge of design to explore contemporary problems and form authentic solutions. Students will use hand building, shop tools, 3D design, laser cutting, and other technology to invent new products or innovative solutions. Students will maintain a digital portfolio to document and reflect upon the design process. ",
+  },
+  {
+    name: "7 AVID",
+    length: 0.5,
+    check: false,
+    chosen: false,
+    firstAlt: false,
+    secondAlt: false,
+    grade: [7],
+    description:
+      "AVID is a college preparatory class that teaches students how to be organized, take notes and get ready for rigorous academic classes.  Students go on field trips to area universities to learn more about college and the application process. You must apply to be in the AVID class.",
   },
   {
     name: "7/8 Drama",
@@ -68,7 +84,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "Students will learn the basic skills of theater and acting. They will explore games of improvisation and performance on the stage. ",
   },
   {
     name: "7/8 Creative Writing",
@@ -78,7 +95,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "Taught using a workshop model, Creative Writing is a course designed for students who enjoy writing as a form of art and personal expression. In this course, students will explore the elements of numerous literary genres (short fiction, poetry, drama, film) and the power of both print and multimedia formats.",
   },
   {
     name: "7/8 Keyboarding",
@@ -88,7 +106,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "Teaches the alpha/numeric keyboard with emphasis on correct techniques, speed, and accuracy.  Keyboard games like Nitrotype will be part of the class experience.  Students will compete against other classes on leaderboards to become stronger typers.",
   },
 
   {
@@ -99,7 +118,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "Students will learn the basics of being a news reporter, and create multiple stories that can appear on the morning announcements. Students will use video cameras and iPads to gather footage, record their voice, and edit their stories together. This class will also take field trips to local businesses to do profile stories about the larger Burley community. Students will be expected to generate their own ideas for stories, write scripts, conduct interviews, and work together with others to make the most professional product possible. ",
   },
 
   {
@@ -110,7 +130,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
-    description: "",
+    description:
+      "This course is designed to develop students’ skills in yearbook production by providing experiences in selected aspects of yearbook production. Students develop skills that include writing copy, captions and headlines; digital photography; desktop publishing and using appropriate technology tools for media production. Yearbook Production supports student’s development as writers, photographers, editors, independent users of technology and as responsible contributing members of the Burley Middle School community. ",
   },
 
   {
@@ -121,7 +142,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
-    description: "",
+    description:
+      "AVID is a college preparatory class that teaches students how to be organized, take notes and get ready for rigorous academic classes.  Students go on field trips to area universities to learn more about college and the application process. You must apply to be in the AVID class.",
   },
 
   {
@@ -152,7 +174,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "You do not need to already be able to sing to take this course! Students who wish to explore their voice and learn how to sing should take this course - even if they haven’t sung before! The students will learn to tune, how to read music, and project their voice in a fun, fast-paced class in a nationally recognized choral program.",
   },
   {
     name: "7/8 Advanced Coding",
@@ -172,18 +195,10 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "In this course, students will learn the basics of acoustic guitar. This class is designed for students with little or no guitar experience. Students will learn fundamentals of music reading as well as basic chords, strumming, and finger patterns. Students will also study and perform various styles of music including modern songs. Students will explore the language of musicians in order to write and arrange their own music! We will focus on rhythm, chords, and lyrics. Opportunities to perform in low-key ‘coffee house’ style concerts will occur from time to time to show off what we’ve learned. ",
   },
-  {
-    name: "7 AVID",
-    length: 1,
-    check: false,
-    chosen: false,
-    firstAlt: false,
-    secondAlt: false,
-    grade: [7],
-    description: "",
-  },
+
   {
     name: "7/8 Strings",
     length: 1,
@@ -192,7 +207,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "String Orchestra is for students who have successfully completed two years of strings (violin, viola, cello, or bass).  It is also open to students with prior experience on string instruments who audition for the teacher. Students will have the opportunity to learn medium-advanced  string instruments technique (violin, viola, cello or bass) in the orchestra setting, music theory, world music, and music history. Students will prepare and perform orchestra concerts twice a year, play at all-county orchestra, and prepare for our yearly field trip/ music festival performance. Students will also have the opportunity to audition and participate in the Junior Regional Orchestra (JRO). Students wishing to take strings who have not completed two years of experience may see Mr. Escobar about joining. ",
   },
   {
     name: "7 Spanish",
@@ -202,7 +218,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7],
-    description: "",
+    description:
+      "Strong emphasis is given to speaking, listening, reading and writing in the language, as well as a few cultural topics. Basic vocabulary and essential grammar are taught to enable students to communicate in simple sentences in directed activities in a variety of topics. Students demonstrate understanding of words and expressions in varied contexts. They read for functional purposes and learn to write paragraphs about themselves and their activities, and descriptions of others. High school credit will be granted for successful completion. Final grades and credit are transferred to the high school and computed into the student’s high school grade point average.",
   },
   {
     name: "8 Spanish",

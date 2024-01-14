@@ -4,6 +4,31 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { electiveData } from "./utils/electives";
+// Import the functions you need from the SDKs you need
+
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBNaskA0i47149Komc5A2mayaBl98P9wjM",
+  authDomain: "elective-selection-app.firebaseapp.com",
+  projectId: "elective-selection-app",
+  storageBucket: "elective-selection-app.appspot.com",
+  messagingSenderId: "620196107030",
+  appId: "1:620196107030:web:56a69e27a007c812593637",
+  measurementId: "G-71PCM7P7J7",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const user = auth.currentUser;
+const analytics = getAnalytics(app);
 
 const Grade7MathClasses = ["7th Grade Math", "7th Grade Algebra"];
 const Grade6MathClasses = ["6th Grade Math", "Triple Compacted Math"];
@@ -21,7 +46,10 @@ function App() {
   const [step, setStep] = useState(1);
   const [lunchNumber, setLunchNumber] = useState(0);
   const [elementary, setElementary] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
+  if (user) setName(user.displayName);
   let maxElectives = 0;
   function handleChangeMath(mathclass) {
     setMath(mathclass);
@@ -184,6 +212,40 @@ function App() {
     }
   }
 
+  function signInWithGoogle(e) {
+    e.preventDefault();
+    console.log("signing in with google");
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const token = result.credential ? result.credential.accessToken : null;
+        // The signed-in user info.
+
+        const user = result.user;
+
+        console.log("User ID:", user.uid);
+        console.log("Display Name:", user.displayName);
+        setName(user.displayName);
+        console.log("Email:", user.email);
+        setEmail(user.email);
+        console.log("Photo URL:", user.photoURL);
+        // ...
+      })
+      .catch((error) => {
+        console.error("Error during sign-in:", error);
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        const credential = error.credential;
+        // ...
+      });
+  }
+
   function handleSubmit(e) {
     // e.preventDefault();
 
@@ -212,8 +274,20 @@ function App() {
   }
   return step !== 5 ? (
     <div className="container">
+      {!name && (
+        <button
+          className="login-with-google-btn"
+          onClick={(e) => signInWithGoogle(e)}
+        >
+          Sign in with Google
+        </button>
+      )}
       <form onSubmit={(e) => handleSubmit(e)}>
-        <GradeSelection grade={grade} handleSetGrade={handleSetGrade} />
+        <GradeSelection
+          grade={grade}
+          handleSetGrade={handleSetGrade}
+          name={name}
+        />
 
         <div className="coreClasses">
           {/* //5th GRADERSSSSSSSSSSSSSSSSSSSSSS */}
@@ -348,6 +422,7 @@ function App() {
                           />
                           <label
                             htmlFor={elective.name}
+                            datatooltip={elective.description}
                             className={
                               elective.length === 0.5
                                 ? "checklabel half"
@@ -429,6 +504,7 @@ function App() {
                           <label
                             htmlFor={elective.name}
                             title={elective.description}
+                            datatooltip={elective.description}
                             className={
                               elective.length === 0.5
                                 ? "checklabel half"
@@ -480,6 +556,8 @@ function App() {
             value={new Date().toISOString()}
           />
         </div>
+        <input type="hidden" id="Name" name="Name" value={name}></input>
+        <input type="hidden" id="Email" name="Email" value={email}></input>
       </form>
     </div>
   ) : (
@@ -856,10 +934,10 @@ function Schedule({
 {
   /* <GradeSelection grade={grade} handleSetGrade={handleSetGrade} /> */
 }
-function GradeSelection({ grade, handleSetGrade }) {
+function GradeSelection({ grade, handleSetGrade, name }) {
   return (
     <div className="gradeSelection">
-      <h2>Select your current grade</h2>
+      <h2>Welcome{" " + name}, select your current grade</h2>
       {/* <input
               type="radio"
               id="5th"

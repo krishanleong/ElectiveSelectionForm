@@ -274,21 +274,21 @@ function App() {
   }
   return step !== 5 ? (
     <div className="container">
-      {!name && (
-        <button
-          className="login-with-google-btn"
-          onClick={(e) => signInWithGoogle(e)}
-        >
-          Sign in with Google
-        </button>
-      )}
       <form onSubmit={(e) => handleSubmit(e)}>
         <GradeSelection
           grade={grade}
           handleSetGrade={handleSetGrade}
           name={name}
+          signInWithGoogle={signInWithGoogle}
         />
-
+        {!name && (
+          <button
+            className="login-with-google-btn"
+            onClick={(e) => signInWithGoogle(e)}
+          >
+            Sign in with Google
+          </button>
+        )}
         <div className="coreClasses">
           {/* //5th GRADERSSSSSSSSSSSSSSSSSSSSSS */}
           {grade === 5 && (

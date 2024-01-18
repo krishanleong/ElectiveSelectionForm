@@ -154,7 +154,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
-    description: "",
+    description:
+      "Middle School Athletic Conditioning class is designed to empower students with the fundamental knowledge and physical skills necessary for a healthy and active lifestyle. This course provides middle school students with the opportunity to develop their physical fitness, enhance their athletic abilities, and learn about the importance of maintaining a strong and healthy body.",
   },
   {
     name: "7/8 Band",
@@ -164,7 +165,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "Students will begin or continue their instrumental education by learning basics of rhythm, notes, and performance. Extra-curricular ensembles, such as Jazz Band, are by audition and optional.  Students wishing to take band who have not completed 6th grade band can take beginning band. Students who have experience in band can take advanced band. Students interested in percussion will take beginning band. ",
   },
   {
     name: "7/8 Choir",
@@ -185,7 +187,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [7, 8],
-    description: "",
+    description:
+      "This elective is for students who already took coding. We will learn more advanced topics of computer programming including functions, arrays, object oriented programming and game development.  During the semester games students will code more advanced projects like Mini-golf, Snake, Minesweeper, Memory and Tetris. In addition, after completing Tetris, students will have the option to explore app development on Android or VR development for Oculus Quest.  Passion projects will be encouraged. ",
   },
   {
     name: "7/8 Guitar",
@@ -229,7 +232,8 @@ export const electiveData = [
     firstAlt: false,
     secondAlt: false,
     grade: [8],
-    description: "",
+    description:
+      "Strong emphasis is given to speaking, listening, reading and writing in the language, as well as a few cultural topics. Basic vocabulary and essential grammar are taught to enable students to communicate in simple sentences in directed activities in a variety of topics. Students demonstrate understanding of words and expressions in varied contexts. They read for functional purposes and learn to write paragraphs about themselves and their activities, and descriptions of others. High school credit will be granted for successful completion. Final grades and credit are transferred to the high school and computed into the student’s high school grade point average.",
   },
   {
     name: "6 Career Investigations",

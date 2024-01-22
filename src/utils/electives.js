@@ -8,7 +8,7 @@ export const electiveData = [
     secondAlt: false,
     grade: [7, 8],
     description:
-      "This elective is for students new to Computer Science and coding.  We will learn the basics of computer programming through a professional grade development environment. Topics like variables, conditionals, loops, graphics and animation will all be explored. During the semester games like Mad Libs, Whack-a-Mole Mini-golf, Snake and Memory will be developed by the student.",
+      "This elective is for students new to Computer Science and coding.  We will learn the basics of computer programming through a professional grade development environment. Topics like variables, conditionals, loops, graphics and animation will all be explored. WhackaMole is the final project.",
   },
   {
     name: "7 Art",

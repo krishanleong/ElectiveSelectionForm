@@ -5,31 +5,6 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { electiveData } from "./utils/electives";
 // Import the functions you need from the SDKs you need
-
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBNaskA0i47149Komc5A2mayaBl98P9wjM",
-  authDomain: "elective-selection-app.firebaseapp.com",
-  projectId: "elective-selection-app",
-  storageBucket: "elective-selection-app.appspot.com",
-  messagingSenderId: "620196107030",
-  appId: "1:620196107030:web:56a69e27a007c812593637",
-  measurementId: "G-71PCM7P7J7",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const user = auth.currentUser;
-const analytics = getAnalytics(app);
-
 const Grade7MathClasses = ["7th Grade Math", "7th Grade Algebra"];
 const Grade6MathClasses = ["6th Grade Math", "Triple Compacted Math"];
 
@@ -49,7 +24,6 @@ function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  if (user) setName(user.displayName);
   let maxElectives = 0;
   function handleChangeMath(mathclass) {
     setMath(mathclass);
@@ -176,6 +150,7 @@ function App() {
     setMath("");
     setStep(1);
     setElectives(electiveData);
+    setName("");
   }
 
   function handleLock(e) {
@@ -212,42 +187,8 @@ function App() {
     }
   }
 
-  function signInWithGoogle(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("signing in with google");
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const token = result.credential ? result.credential.accessToken : null;
-        // The signed-in user info.
-
-        const user = result.user;
-
-        console.log("User ID:", user.uid);
-        console.log("Display Name:", user.displayName);
-        setName(user.displayName);
-        console.log("Email:", user.email);
-        setEmail(user.email);
-        console.log("Photo URL:", user.photoURL);
-        // ...
-      })
-      .catch((error) => {
-        console.error("Error during sign-in:", error);
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential;
-        // ...
-      });
-  }
-
-  function handleSubmit(e) {
-    // e.preventDefault();
 
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
       checkbox.disabled = false;
@@ -255,21 +196,28 @@ function App() {
 
     const formEle = document.querySelector("form");
     const formDatab = new FormData(formEle);
+    console.log([...formDatab.entries()]);
+    console.log(formDatab);
+    try {
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbwq73SYyPLaHUDqdYRf42NijSljhT1e9hDDVC9HtqcAs4CAyipmpmuP1Yp7tFqI3wP_9g/exec",
+        {
+          method: "POST",
+          body: formDatab,
+        }
+      );
 
-    fetch(
-      "https://script.google.com/macros/s/AKfycbzdmrSZdJvEAujZAul8cPcbcwNgTEUzfjhcT-DIpfIO-Hyoa6SPJCgYTqItvo0WgmaZ3g/exec",
-      {
-        method: "POST",
-        body: formDatab,
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log("ERRRRRRROOO", error.message);
+      console.log(error.stack);
+    }
+
     setStep(() => step + 1);
   }
   return step !== 5 ? (
@@ -278,17 +226,16 @@ function App() {
         <GradeSelection
           grade={grade}
           handleSetGrade={handleSetGrade}
-          name={name}
-          signInWithGoogle={signInWithGoogle}
+          handleReset={handleReset}
         />
-        {!name && (
+        {/* {!name && (
           <button
             className="login-with-google-btn"
             onClick={(e) => signInWithGoogle(e)}
           >
             Sign in with Google
           </button>
-        )}
+        )} */}
         <div className="coreClasses">
           {/* //5th GRADERSSSSSSSSSSSSSSSSSSSSSS */}
           {grade === 5 && (
@@ -547,6 +494,19 @@ function App() {
                 required
                 onChange={(e) => setLunchNumber(e.target.value)}
               />
+              <label htmlFor="name" className="marginleft">
+                Enter your full name:
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className="textbox"
+                value={name}
+                required
+                onChange={(e) => setName(e.target.value)}
+              />
+
               {step === 4 && <button disabled={step !== 4}>Submit</button>}
             </>
           )}
@@ -556,8 +516,6 @@ function App() {
             value={new Date().toISOString()}
           />
         </div>
-        <input type="hidden" id="Name" name="Name" value={name}></input>
-        <input type="hidden" id="Email" name="Email" value={email}></input>
       </form>
     </div>
   ) : (
@@ -934,10 +892,10 @@ function Schedule({
 {
   /* <GradeSelection grade={grade} handleSetGrade={handleSetGrade} /> */
 }
-function GradeSelection({ grade, handleSetGrade, name }) {
+function GradeSelection({ grade, handleSetGrade, handleReset }) {
   return (
     <div className="gradeSelection">
-      <h2>Welcome{" " + name}, select your current grade</h2>
+      <h2>Welcome, select your current grade</h2>
       {/* <input
               type="radio"
               id="5th"

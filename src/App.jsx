@@ -895,8 +895,9 @@ function Schedule({
 function GradeSelection({ grade, handleSetGrade, handleReset }) {
   return (
     <div className="gradeSelection">
-      <h2>Welcome, select your current grade</h2>
-      {/* <input
+      <div>
+        <h2>Welcome, select your current grade</h2>
+        {/* <input
               type="radio"
               id="5th"
               name="grade"
@@ -919,30 +920,32 @@ function GradeSelection({ grade, handleSetGrade, handleReset }) {
             </select>
           </>
         )}*/}
-      <input
-        type="radio"
-        id="6th"
-        name="grade"
-        value="6"
-        checked={grade === 6}
-        onChange={() => handleSetGrade(6)}
-      />
-      <label htmlFor="6th" className="radiolabel">
-        6th
-      </label>
-      <input
-        type="radio"
-        id="7th"
-        value="7"
-        name="grade"
-        checked={grade === 7}
-        onChange={() => handleSetGrade(7)}
-      />
-      <label htmlFor="7th" className="radiolabel">
-        7th
-      </label>
+        <input
+          type="radio"
+          id="6th"
+          name="grade"
+          value="6"
+          checked={grade === 6}
+          onChange={() => handleSetGrade(6)}
+        />
+        <label htmlFor="6th" className="radiolabel">
+          6th
+        </label>
+        <input
+          type="radio"
+          id="7th"
+          value="7"
+          name="grade"
+          checked={grade === 7}
+          onChange={() => handleSetGrade(7)}
+        />
+        <label htmlFor="7th" className="radiolabel">
+          7th
+        </label>
 
-      <button onClick={(e) => handleReset(e)}>Reset Everything</button>
+        <button onClick={(e) => handleReset(e)}>Reset Everything</button>
+      </div>
+      {/* <div className="tooltipspace">testing</div> */}
     </div>
   );
 }

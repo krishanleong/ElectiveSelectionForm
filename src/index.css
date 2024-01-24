@@ -21,6 +21,19 @@ body {
 
   font-family: "Roboto", sans-serif;
 }
+.gradeSelection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tooltipspace {
+  width: 600px;
+  height: 100px;
+  max-width: 70%;
+  border: 1px solid red;
+}
+
 h2 {
   margin-bottom: 20px;
 }
@@ -195,7 +208,7 @@ button {
   background-color: lightpink;
   margin: 0.3rem 0.7rem 0.3rem 4rem;
   font-weight: 700;
-  width: 15%;
+  width: 150px;
   height: 35px;
   color: black;
   border-radius: 5px;

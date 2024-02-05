@@ -488,7 +488,7 @@ function App() {
                 id="lunchnumber"
                 name="lunchnumber"
                 className="textbox"
-                max={99999}
+                max={199999}
                 min={11111}
                 value={lunchNumber}
                 required
